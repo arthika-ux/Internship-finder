@@ -1,0 +1,38 @@
+databases:
+  - name: internship-finder-db
+    databaseName: internshipfinder
+    user: internshipfinder
+    plan: free
+    region: oregon
+    ipAllowList: []
+
+services:
+  - type: web
+    name: internship-finder
+    runtime: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /api/internships
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: DB_HOST
+        fromDatabase:
+          name: internship-finder-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: internship-finder-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: internship-finder-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: internship-finder-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: internship-finder-db
+          property: password
